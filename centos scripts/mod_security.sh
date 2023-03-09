@@ -9,12 +9,11 @@ yum install -y mod_security
 # Restart Apache
 systemctl restart httpd
 
-# Move and extract OWASP ModSecurity CRS files
-cd /etc/httpd/
-mv /MacdaddyHackers/Owasp-modsecurity-crs.zip .
-unzip Owasp-modsecurity-crs.zip
-mv owasp-modsecurity-crs modsecurity-crs
-mv modsecurity-crs/crs-setup.conf.example modsecurity-crs/crs-setup.conf
+# Move owasp-modsecurity-crs.zip to /etc/httpd/ directory and extract files
+mv /MacDaddysHackers/owasp-modsecurity-crs.zip /etc/httpd/
+unzip /etc/httpd/owasp-modsecurity-crs.zip -d /etc/httpd/
+mv /etc/httpd/owasp-modsecurity-crs /etc/httpd/modsecurity-crs
+mv /etc/httpd/modsecurity-crs/crs-setup.conf.example /etc/httpd/modsecurity-crs/crs-setup.conf
 
 # Configure ModSecurity
 cat <<EOF >> /etc/httpd/conf/httpd.conf
