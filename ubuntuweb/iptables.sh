@@ -14,8 +14,8 @@ iptables -A INPUT -p udp -m udp -j ACCEPT
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 
-# Allow SSH traffic on port 64435
-iptables -A INPUT -p tcp --dport 64435 -j ACCEPT
+# Allow SSH traffic on port 22
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 
 # Allow Incoming ICMP Traffic 
 iptables -A INPUT -p icmp -j ACCEPT
