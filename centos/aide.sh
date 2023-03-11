@@ -7,8 +7,8 @@ yum install -y aide
 cat <<EOF > /etc/aide.conf
 # AIDE configuration file
 
-database=file:/var/lib/aide/aide.db
-database_out=file:/var/lib/aide/aide.db.new
+database=file:/var/lib/aide/aide.db.gz
+database_out=file:/var/lib/aide/aide.db.gz.new
 gzip_dbout=yes
 verbose=4
 
@@ -35,8 +35,11 @@ EOF
 # Initialize the AIDE database with the new configuration
 aide --init
 
+# Wait for aide --init to finish
+sleep 5s
+
 # Remove the .new extension from the new database file
-mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db
+mv /var/lib/aide/aide.db.gz.new /var/lib/aide/aide.db.gz
 
 # Create a cron job to run aide --check every 2 minutes
 echo "*/2 * * * * /usr/sbin/aide --check" | crontab -
