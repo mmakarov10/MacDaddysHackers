@@ -32,5 +32,11 @@ verbose=4
 
 EOF
 
+# Initialize the AIDE database with the new configuration
+aide --init
+
+# Remove the .new extension from the new database file
+mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db
+
 # Create a cron job to run aide --check every 2 minutes
 echo "*/2 * * * * /usr/sbin/aide --check" | crontab -
