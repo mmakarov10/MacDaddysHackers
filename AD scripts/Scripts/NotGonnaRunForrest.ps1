@@ -17,7 +17,7 @@ while (`$True) {
 }
 "@
 
-$ScriptPath = "C:\Windows\System32\MamasTips.ps1"
+$ScriptPath = "C:\Windows\System32\Cron.ps1"
 $TaskName = "TipScheduler"
 
 $Script | Out-File $ScriptPath -Encoding ASCII
