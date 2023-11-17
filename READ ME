@@ -1,0 +1,15 @@
+READ ME
+
+init-palo-config.txt Rule Break Down
+Security Policy Rules:
+Allow Ping: ICMP traffic is permitted across the network for diagnostic purposes.
+Ubuntu Web: HTTP and HTTPS traffic is allowed to the Ubuntu web server, with address translation applied for both inbound and NAT traffic.
+AD DNS In: DNS requests to the AD server are allowed, with address translation for inbound and NAT traffic.
+Centos E-comm: Permits web browsing traffic to the CentOS e-commerce server, with address translation for public accessibility.
+Fedora Mail: SMTP, POP3, and IMAP traffic for email services on the Fedora server is allowed, including address translation for public-facing services.
+Fedora AD Auth: LDAP authentication traffic from the Fedora system to the AD server is permitted within the user segment.
+Splunk Forwarder: Data forwarding to the Splunk server is allowed for internal and user-originated traffic.
+Serve Splunk: Web browsing traffic on port 8000 to the Splunk server is allowed for public segment access.
+Debian DNS_NTP: DNS and NTP services to the Debian server are allowed within the internal segment.
+Default Egress Applications: General outbound web browsing, DNS, and NTP traffic to external destinations are permitted.
+Default Egress Ports: Allows HTTP and HTTPS traffic through standard ports to external destinations.
