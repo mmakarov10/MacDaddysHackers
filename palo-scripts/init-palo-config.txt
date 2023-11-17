@@ -16,10 +16,7 @@ set address "docker-nat" ip-netmask 172.25.34.97
 set address "fedora-nat" ip-netmask 172.25.34.39
 set address "splunk-nat" ip-netmask 172.25.34.9
 set address "ubuntu web-nat" ip-netmask 172.25.34.23
-set address bad-ip-10-4-4-4 ip-netmask 10.4.4.4
 
-set address-group BadGuys
-set address-group BadGuys static bad-ip-10-4-4-4
 
 set service "VPN 500" protocol udp port 500
 set service "VPN 4500" protocol udp port 4500
@@ -27,8 +24,6 @@ set service port-8000 protocol tcp port 8000
 
 delete rulebase security
 set rulebase security rules "Allow Ping" from any source any to any destination any application ping service application-default action allow
-set rulebase security rules "Block Bad IPs In" from any source BadGuys to any destination any application any service any action deny
-set rulebase security rules "Block Bad IPs Out" from any source any to any destination BadGuys application any service any action deny
 set rulebase security rules "Ubuntu Web" from any source any to User destination "ubuntu web" application web-browsing service application-default action allow
 set rulebase security rules "Ubuntu Web" destination "ubuntu web-nat"
 set rulebase security rules "AD DNS In" from any source any to User destination ad application dns service application-default action allow
@@ -99,8 +94,6 @@ set profiles spyware Best_Sec_Policy rules simple-low category any packet-captur
 set profiles wildfire-analysis Best_Sec_Policy rules "Send All" application any file-type any direction both analysis public-cloud
 set profile-group Best_Practice_Security file-blocking "strict file blocking" spyware Best_Sec_Policy virus Best_Sec_Policy vulnerability Best_Sec_Policy url-filtering default wildfire-analysis Best_Sec_Policy
 set rulebase security rules "Allow Ping" profile-setting group Best_Practice_Security
-set rulebase security rules "Block Bad IPs In" profile-setting group Best_Practice_Security
-set rulebase security rules "Block Bad IPs Out" profile-setting group Best_Practice_Security
 set rulebase security rules "Ubuntu Web" profile-setting group Best_Practice_Security
 set rulebase security rules "AD DNS In" profile-setting group Best_Practice_Security
 set rulebase security rules "Centos E-comm" profile-setting group Best_Practice_Security
@@ -113,6 +106,19 @@ set rulebase security rules "Default Egress Applications" profile-setting group 
 set rulebase security rules "Default Egress Ports" profile-setting group Best_Practice_Security
 
 set deviceconfig system ntp-servers primary-ntp-server ntp-server-address 172.20.240.20 authentication-type none
-set rulebase security rules "Ubuntu Web" disabled yes
 set deviceconfig system login-banner "Team 14 network for work only. Monitoring in place. Will provide information to law enforcement if used without authorization."
+
+
+
+Just in case #############
 set rulebase nat rules "PA" disabled yes
+set rulebase security rules "Ubuntu Web" disabled yes
+
+set address bad-ip-10-4-4-4 ip-netmask 10.4.4.4
+set address-group BadGuys
+set address-group BadGuys static bad-ip-10-4-4-4
+set rulebase security rules "Block Bad IPs In" from any source BadGuys to any destination any application any service any action deny
+set rulebase security rules "Block Bad IPs Out" from any source any to any destination BadGuys application any service any action deny
+set rulebase security rules "Block Bad IPs In" profile-setting group Best_Practice_Security
+set rulebase security rules "Block Bad IPs Out" profile-setting group Best_Practice_Security
+
