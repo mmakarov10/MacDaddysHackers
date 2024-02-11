@@ -17,8 +17,9 @@ set rulebase security rules "Fedora AD Auth" from Public source fedora to User d
 set rulebase security rules "Internal to Splunk App" from Internal source any to Public destination "splunk" application splunk service application-default action allow
 set rulebase security rules "User to Splunk App" from User source any to Public destination "splunk" application splunk service application-default action allow
 
-set rulebase security rules "Internal Serve Splunk" from Internal source any to Public destination "splunk-nat" application web-browsing service port-8000 action allow
-set rulebase security rules "User Serve Splunk" from User source any to Public destination "splunk-nat" application web-browsing service port-8000 action allow
+set rulebase security rules "Internal Serve Splunk" from Internal source any to Public destination "splunk" application web-browsing service port-8000 action allow
+set rulebase security rules "User Serve Splunk" from User source any to Public destination "splunk" application web-browsing service port-8000 action allow
+set rulebase security rules "External Web Access to Splunk" from External source any to Public destination "splunk-nat" application web-browsing service port-8000 action allow
 
 
 set rulebase security rules "External DNS Access" from External source any to Internal destination "debian-nat" application dns service application-default action allow
