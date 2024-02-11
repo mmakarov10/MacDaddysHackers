@@ -1,3 +1,38 @@
+delete rulebase security
+set rulebase security rules "Allow Ping" from any source any to any destination any application ping service application-default action allow
+
+set rulebase security rules "Ubuntu Web External Access" from External source any to User destination "ubuntu web-nat" application web-browsing service application-default action allow
+
+
+set rulebase security rules "AD DNS External Access" from External source any to User destination "ad-nat" application dns service application-default action allow
+
+
+set rulebase security rules "Centos E-comm External Access" from External source any to Public destination "centos-nat" application web-browsing service application-default action allow
+
+set rulebase security rules "Fedora Mail SMTP External Access" from External source any to Public destination "fedora-nat" application smtp service application-default action allow
+set rulebase security rules "Fedora Mail POP3 External Access" from External source any to Public destination "fedora-nat" application pop3 service application-default action allow
+set rulebase security rules "Fedora Mail IMAP External Access" from External source any to Public destination "fedora-nat" application imap service application-default action allow
+set rulebase security rules "Fedora AD Auth" from Public source fedora to User destination ad application ldap service application-default action allow
+
+set rulebase security rules "Internal to Splunk App" from Internal source any to Public destination "splunk" application splunk service application-default action allow
+set rulebase security rules "User to Splunk App" from User source any to Public destination "splunk" application splunk service application-default action allow
+
+set rulebase security rules "Internal Serve Splunk" from Internal source any to Public destination "splunk-nat" application web-browsing service port-8000 action allow
+set rulebase security rules "User Serve Splunk" from User source any to Public destination "splunk-nat" application web-browsing service port-8000 action allow
+
+
+set rulebase security rules "External DNS Access" from External source any to Internal destination "debian-nat" application dns service application-default action allow
+set rulebase security rules "Public NTP Access to Debian" from Public source any to Internal destination "debian" application ntp service application-default action allow
+set rulebase security rules "User NTP Access" from User source any to Internal destination "debian" application ntp service application-default action allow
+
+
+set rulebase security rules "Default Egress Applications" from any source any to External destination any application web-browsing service application-default action allow
+set rulebase security rules "Default Egress Applications" application dns
+set rulebase security rules "Default Egress Applications" application ntp
+set rulebase security rules "Default Egress Ports" from any source any to External destination any application any service service-http action allow
+set rulebase security rules "Default Egress Ports" service service-https
+
+
 set rulebase security rules "Deny Internal to User" from Internal source any to User destination any application any service any action deny
 set rulebase security rules "Deny User to Internal" from User source any to Internal destination any application any service any action deny
 set rulebase security rules "Deny Internal to Public" from Internal source any to Public destination any application any service any action deny
