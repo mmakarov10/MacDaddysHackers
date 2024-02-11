@@ -1,3 +1,10 @@
+# Free to be use by anyone. Please realize you are using these commands
+# at your own risk. The author holds no liability and will not be held
+# responsible for any damages done to systems or system configurations.
+
+# Update IP address
+# Update Team Number Login Banner
+
 set address docker ip-netmask 172.20.240.10
 set address debian ip-netmask 172.20.240.20
 set address "ubuntu web" ip-netmask 172.20.242.10
@@ -130,5 +137,12 @@ set rulebase security rules "Public NTP Access to Debian" profile-setting group 
 set rulebase security rules "User NTP Access" profile-setting group Best_Practice_Security
 set rulebase security rules "Default Egress Applications" profile-setting group Best_Practice_Security
 set rulebase security rules "Default Egress Ports" profile-setting group Best_Practice_Security
+
+set deviceconfig system ntp-servers primary-ntp-server ntp-server-address 172.20.240.20 authentication-type none
+set deviceconfig system login-banner "Team 14 network for work only. Monitoring in place. Will provide information to law enforcement if used without authorization."
+
+
+
+
 
 
