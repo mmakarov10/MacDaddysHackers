@@ -1,3 +1,8 @@
+# Free to be use by anyone. Please realize you are using these commands
+# at your own risk. The author holds no liability and will not be held
+# responsible for any damages done to systems or system configurations.
+
+
 set address docker ip-netmask 172.20.240.10
 set address debian ip-netmask 172.20.240.20
 set address "ubuntu web" ip-netmask 172.20.242.10
