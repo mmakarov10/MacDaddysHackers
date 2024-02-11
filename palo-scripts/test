@@ -34,9 +34,4 @@ set rulebase security rules "Default Egress Ports" from any source any to Extern
 set rulebase security rules "Default Egress Ports" service service-https
 
 
-set rulebase security rules "Deny Internal to User" from Internal source any to User destination any application any service any action deny
-set rulebase security rules "Deny User to Internal" from User source any to Internal destination any application any service any action deny
-set rulebase security rules "Deny Internal to Public" from Internal source any to Public destination any application any service any action deny
-set rulebase security rules "Deny Public to Internal" from Public source any to Internal destination any application any service any action deny
-set rulebase security rules "Deny User to Public" from User source any to Public destination any application any service any action deny
-set rulebase security rules "Deny Public to User" from Public source any to User destination any application any service any action deny
+
