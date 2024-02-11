@@ -1,20 +1,6 @@
-# Deny all traffic from Internal to User Zone
 set rulebase security rules "Deny Internal to User" from Internal source any to User destination any application any service any action deny
-
-# Deny all traffic from User to Internal Zone
 set rulebase security rules "Deny User to Internal" from User source any to Internal destination any application any service any action deny
-
-# Deny all traffic from Internal to Public Zone
 set rulebase security rules "Deny Internal to Public" from Internal source any to Public destination any application any service any action deny
-
-# Deny all traffic from Public to Internal Zone
 set rulebase security rules "Deny Public to Internal" from Public source any to Internal destination any application any service any action deny
-
-# Deny all traffic from User to Public Zone
 set rulebase security rules "Deny User to Public" from User source any to Public destination any application any service any action deny
-
-# Deny all traffic from Public to User Zone
 set rulebase security rules "Deny Public to User" from Public source any to User destination any application any service any action deny
-
-# Apply the changes to make the rules take effect
-commit
