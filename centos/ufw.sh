@@ -6,7 +6,6 @@ sudo ufw --force reset
 
 sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
-sudo ufw allow 22/tcp
 
 sudo ufw default deny incoming
 
