@@ -45,9 +45,12 @@ set rulebase security rules "External DNS Access" from external source any to in
 set rulebase security rules "Public NTP Access to Debian" from public source any to internal destination "debian" application ntp service application-default action allow
 set rulebase security rules "User NTP Access" from user source any to internal destination "debian" application ntp service application-default action allow
 set rulebase security rules "Egress Allow DNS" from any source any to external destination any application dns service application-default action allow
-set rulebase security rules "Egress Allow HTTP/HTTPS" from any source any to external destination any application [web-browsing ssl] service application-default action allow
+set rulebase security rules "Egress Allow HTTP" from any source any to external destination any application web-browsing service application-default action allow
+set rulebase security rules "Egress Allow HTTPS" from any source any to external destination any application ssl service application-default action allow
 set rulebase security rules "Egress Allow NTP" from any source any to external destination any application ntp service application-default action allow
-set rulebase security rules "Egress Allow SMTP/POP3/IMAP" from any source any to external destination any application [smtp pop3 imap] service application-default action allow
+set rulebase security rules "Egress Allow SMTP" from any source any to external destination any application smtp service application-default action allow
+set rulebase security rules "Egress Allow POP3" from any source any to external destination any application pop3 service application-default action allow
+set rulebase security rules "Egress Allow IMAP" from any source any to external destination any application imap service application-default action allow
 set rulebase security rules "Catch-All Deny Egress" from any source any to external destination any application any service any action deny
 
 set rulebase security rules "Allow Ping" log-start yes log-end yes
@@ -67,9 +70,12 @@ set rulebase security rules "External DNS Access" log-start yes log-end yes
 set rulebase security rules "Public NTP Access to Debian" log-start yes log-end yes
 set rulebase security rules "User NTP Access" log-start yes log-end yes
 set rulebase security rules "Egress Allow DNS" log-start yes log-end yes
-set rulebase security rules "Egress Allow HTTP/HTTPS" log-start yes log-end yes
+set rulebase security rules "Egress Allow HTTP" log-start yes log-end yes
+set rulebase security rules "Egress Allow HTTPS" log-start yes log-end yes
 set rulebase security rules "Egress Allow NTP" log-start yes log-end yes
-set rulebase security rules "Egress Allow SMTP/POP3/IMAP" log-start yes log-end yes
+set rulebase security rules "Egress Allow SMTP" log-start yes log-end yes
+set rulebase security rules "Egress Allow POP3" log-start yes log-end yes
+set rulebase security rules "Egress Allow IMAP" log-start yes log-end yes
 set rulebase security rules "Catch-All Deny Egress" log-start yes log-end yes
 
 set profiles virus Best_Sec_Policy decoder ftp action reset-both
@@ -138,9 +144,12 @@ set rulebase security rules "External DNS Access" profile-setting group Best_Pra
 set rulebase security rules "Public NTP Access to Debian" profile-setting group Best_Practice_Security
 set rulebase security rules "User NTP Access" profile-setting group Best_Practice_Security
 set rulebase security rules "Egress Allow DNS" profile-setting group Best_Practice_Security
-set rulebase security rules "Egress Allow HTTP/HTTPS" profile-setting group Best_Practice_Security
+set rulebase security rules "Egress Allow HTTP" profile-setting group Best_Practice_Security
+set rulebase security rules "Egress Allow HTTPS" profile-setting group Best_Practice_Security
 set rulebase security rules "Egress Allow NTP" profile-setting group Best_Practice_Security
-set rulebase security rules "Egress Allow SMTP/POP3/IMAP" profile-setting group Best_Practice_Security
+set rulebase security rules "Egress Allow SMTP" profile-setting group Best_Practice_Security
+set rulebase security rules "Egress Allow POP3" profile-setting group Best_Practice_Security
+set rulebase security rules "Egress Allow IMAP" profile-setting group Best_Practice_Security
 set rulebase security rules "Catch-All Deny Egress" profile-setting group Best_Practice_Security
 
 
