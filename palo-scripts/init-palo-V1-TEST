@@ -49,7 +49,7 @@ set rulebase security rules "Block Egress Traffic from WKS" from internal source
 set rulebase security rules "Block Egress Traffic from WKS" disabled yes
 set rulebase security rules "Egress Allow DNS" from any source any to external destination any application dns service application-default action allow
 set rulebase security rules "Egress Allow HTTP" from any source any to external destination any application web-browsing service application-default action allow
-set rulebase security rules "Egress Allow HTTPS" from any source any to external destination any application ssl service application-default action allow
+set rulebase security rules "Egress Allow HTTPS" from any source any to External destination any application any service service-https action allow
 set rulebase security rules "Egress Allow NTP" from any source any to external destination any application ntp service application-default action allow
 set rulebase security rules "Catch-All Deny Egress" from any source any to external destination any application any service any action deny
 
