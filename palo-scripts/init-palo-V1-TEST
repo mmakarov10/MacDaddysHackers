@@ -50,6 +50,28 @@ set rulebase security rules "Egress Allow NTP" from any source any to external d
 set rulebase security rules "Egress Allow SMTP/POP3/IMAP" from any source any to external destination any application [smtp pop3 imap] service application-default action allow
 set rulebase security rules "Catch-All Deny Egress" from any source any to external destination any application any service any action deny
 
+set rulebase security rules "Allow Ping" log-start yes log-end yes
+set rulebase security rules "Ubuntu Web External Access" log-start yes log-end yes
+set rulebase security rules "AD DNS External Access" log-start yes log-end yes
+set rulebase security rules "Centos E-comm External Access" log-start yes log-end yes
+set rulebase security rules "Fedora Mail SMTP External Access" log-start yes log-end yes
+set rulebase security rules "Fedora Mail POP3 External Access" log-start yes log-end yes
+set rulebase security rules "Fedora Mail IMAP External Access" log-start yes log-end yes
+set rulebase security rules "Fedora AD Auth" log-start yes log-end yes
+set rulebase security rules "Internal to Splunk App" log-start yes log-end yes
+set rulebase security rules "User to Splunk App" log-start yes log-end yes
+set rulebase security rules "Internal Serve Splunk" log-start yes log-end yes
+set rulebase security rules "User Serve Splunk" log-start yes log-end yes
+set rulebase security rules "External Web Access to Splunk" log-start yes log-end yes
+set rulebase security rules "External DNS Access" log-start yes log-end yes
+set rulebase security rules "Public NTP Access to Debian" log-start yes log-end yes
+set rulebase security rules "User NTP Access" log-start yes log-end yes
+set rulebase security rules "Egress Allow DNS" log-start yes log-end yes
+set rulebase security rules "Egress Allow HTTP/HTTPS" log-start yes log-end yes
+set rulebase security rules "Egress Allow NTP" log-start yes log-end yes
+set rulebase security rules "Egress Allow SMTP/POP3/IMAP" log-start yes log-end yes
+set rulebase security rules "Catch-All Deny Egress" log-start yes log-end yes
+
 set profiles virus Best_Sec_Policy decoder ftp action reset-both
 set profiles virus Best_Sec_Policy decoder http action reset-both
 set profiles virus Best_Sec_Policy decoder imap action reset-both
@@ -99,27 +121,28 @@ set profiles wildfire-analysis Best_Sec_Policy rules "Send All" application any 
 
 set profile-group Best_Practice_Security file-blocking "strict file blocking" spyware Best_Sec_Policy virus Best_Sec_Policy vulnerability Best_Sec_Policy url-filtering default wildfire-analysis Best_Sec_Policy
 
-set rulebase security rules "Allow Ping" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Ubuntu Web External Access" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "AD DNS External Access" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Centos E-comm External Access" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Fedora Mail SMTP External Access" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Fedora Mail POP3 External Access" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Fedora Mail IMAP External Access" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Fedora AD Auth" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Internal to Splunk App" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "User to Splunk App" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Internal Serve Splunk" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "User Serve Splunk" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "External Web Access to Splunk" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "External DNS Access" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Public NTP Access to Debian" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "User NTP Access" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Egress Allow DNS" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Egress Allow HTTP/HTTPS" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Egress Allow NTP" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Egress Allow SMTP/POP3/IMAP" profile-setting group Best_Practice_Security log-start yes log-end yes
-set rulebase security rules "Catch-All Deny Egress" log-start yes log-end yes
+set rulebase security rules "Allow Ping" profile-setting group Best_Practice_Security
+set rulebase security rules "Ubuntu Web External Access" profile-setting group Best_Practice_Security
+set rulebase security rules "AD DNS External Access" profile-setting group Best_Practice_Security
+set rulebase security rules "Centos E-comm External Access" profile-setting group Best_Practice_Security
+set rulebase security rules "Fedora Mail SMTP External Access" profile-setting group Best_Practice_Security
+set rulebase security rules "Fedora Mail POP3 External Access" profile-setting group Best_Practice_Security
+set rulebase security rules "Fedora Mail IMAP External Access" profile-setting group Best_Practice_Security
+set rulebase security rules "Fedora AD Auth" profile-setting group Best_Practice_Security
+set rulebase security rules "Internal to Splunk App" profile-setting group Best_Practice_Security
+set rulebase security rules "User to Splunk App" profile-setting group Best_Practice_Security
+set rulebase security rules "Internal Serve Splunk" profile-setting group Best_Practice_Security
+set rulebase security rules "User Serve Splunk" profile-setting group Best_Practice_Security
+set rulebase security rules "External Web Access to Splunk" profile-setting group Best_Practice_Security
+set rulebase security rules "External DNS Access" profile-setting group Best_Practice_Security
+set rulebase security rules "Public NTP Access to Debian" profile-setting group Best_Practice_Security
+set rulebase security rules "User NTP Access" profile-setting group Best_Practice_Security
+set rulebase security rules "Egress Allow DNS" profile-setting group Best_Practice_Security
+set rulebase security rules "Egress Allow HTTP/HTTPS" profile-setting group Best_Practice_Security
+set rulebase security rules "Egress Allow NTP" profile-setting group Best_Practice_Security
+set rulebase security rules "Egress Allow SMTP/POP3/IMAP" profile-setting group Best_Practice_Security
+set rulebase security rules "Catch-All Deny Egress" profile-setting group Best_Practice_Security
+
 
 set deviceconfig system ntp-servers primary-ntp-server ntp-server-address 172.20.240.20 authentication-type none
 set deviceconfig system login-banner "Team # network for work only. Monitoring in place. Will provide information to law enforcement if used without authorization."
