@@ -5,6 +5,7 @@
 set address docker ip-netmask 172.20.240.10
 set address debian ip-netmask 172.20.240.20
 set address "ubuntu web" ip-netmask 172.20.242.10
+set address wks ip-netmask 172.20.242.101
 set address ad ip-netmask 172.20.242.200
 set address splunk ip-netmask 172.20.241.20
 set address centos ip-netmask 172.20.241.30
@@ -44,6 +45,8 @@ set rulebase security rules "External Web Access to Splunk" from external source
 set rulebase security rules "External DNS Access" from external source any to internal destination "debian-nat" application dns service application-default action allow
 set rulebase security rules "Public NTP Access to Debian" from public source any to internal destination "debian" application ntp service application-default action allow
 set rulebase security rules "User NTP Access" from user source any to internal destination "debian" application ntp service application-default action allow
+set rulebase security rules "Block Egress Traffic from WKS" from internal source "wks" to external destination any application any service any action deny
+set rulebase security rules "Block Egress Traffic from WKS" disabled yes
 set rulebase security rules "Egress Allow DNS" from any source any to external destination any application dns service application-default action allow
 set rulebase security rules "Egress Allow HTTP" from any source any to external destination any application web-browsing service application-default action allow
 set rulebase security rules "Egress Allow HTTPS" from any source any to external destination any application ssl service application-default action allow
@@ -69,6 +72,7 @@ set rulebase security rules "External Web Access to Splunk" log-start yes log-en
 set rulebase security rules "External DNS Access" log-start yes log-end yes
 set rulebase security rules "Public NTP Access to Debian" log-start yes log-end yes
 set rulebase security rules "User NTP Access" log-start yes log-end yes
+set rulebase security rules "Block Egress Traffic from WKS" log-start yes log-end yes
 set rulebase security rules "Egress Allow DNS" log-start yes log-end yes
 set rulebase security rules "Egress Allow HTTP" log-start yes log-end yes
 set rulebase security rules "Egress Allow HTTPS" log-start yes log-end yes
@@ -143,6 +147,7 @@ set rulebase security rules "External Web Access to Splunk" profile-setting grou
 set rulebase security rules "External DNS Access" profile-setting group Best_Practice_Security
 set rulebase security rules "Public NTP Access to Debian" profile-setting group Best_Practice_Security
 set rulebase security rules "User NTP Access" profile-setting group Best_Practice_Security
+set rulebase security rules "Block Egress Traffic from WKS" profile-setting group Best_Practice_Security
 set rulebase security rules "Egress Allow DNS" profile-setting group Best_Practice_Security
 set rulebase security rules "Egress Allow HTTP" profile-setting group Best_Practice_Security
 set rulebase security rules "Egress Allow HTTPS" profile-setting group Best_Practice_Security
