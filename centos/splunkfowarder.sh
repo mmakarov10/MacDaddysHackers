@@ -9,7 +9,7 @@ sudo ./splunk enable boot-start
 /opt/splunkforwarder/bin/splunk add monitor /var/log/auth.log -index main -sourcetype linux_secure -host centOS
 
 /opt/splunkforwarder/bin/splunk add monitor /var/log/httpd/access_log -index main -sourcetype access_log -host centOS
-/opt/splunkforwarder/bin/splunk add monitor /var/log/cron -index main -sourcetype cron -host centos
+/opt/splunkforwarder/bin/splunk add monitor /var/log/cron -index main -sourcetype cron -host centOS
 /opt/splunkforwarder/bin/splunk add monitor /var/log/httpd/error_log -index main -sourcetype error_log -host centOS
 /opt/splunkforwarder/bin/splunk add monitor /var/log/secure -index main -sourcetype secure -host centOS
 /opt/splunkforwarder/bin/splunk add monitor /var/log/messages -index main -sourcetype messages -host centOS
