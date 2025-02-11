@@ -30,8 +30,6 @@ set service "service-ssh" protocol tcp port 22
 
 delete rulebase security
 set rulebase security rules "Allow Ping" from any source any to any destination any application ping service application-default action allow
-set rulebase security rules "Allow HTTPS to Palo MGT from WKS" from User source "WKS" to "User" destination "Palo Mgmt" application any service service-https action allow
-set rulebase security rules "Allow SSH to Palo MGT from WKS" from User source "WKS" to "User" destination "Palo Mgmt" application "ssh" service "service-ssh" action allow
 set rulebase security rules "Block Egress Traffic from WKS" from User source "WKS" to any destination any application any service any action deny
 set rulebase security rules "Block Egress Traffic from WKS" disabled yes
 set rulebase security rules "Ubuntu Web External Access" from External source any to User destination "Ubuntu Web-NAT" application web-browsing service application-default action allow
@@ -77,8 +75,6 @@ set rulebase security rules "Public NTP Access to Debian" log-start yes log-end 
 set rulebase security rules "User NTP Access to Debian" log-start yes log-end yes
 set rulebase security rules "Public DNS Access to Debian" log-start yes log-end yes
 set rulebase security rules "User DNS Access to Debian" log-start yes log-end yes
-set rulebase security rules "Allow HTTPS to Palo MGT from WKS" log-start yes log-end yes
-set rulebase security rules "Allow SSH to Palo MGT from WKS" log-start yes log-end yes
 set rulebase security rules "Block Egress Traffic from WKS" log-start yes log-end yes
 set rulebase security rules "Egress Allow DNS from Debian" log-start yes log-end yes
 set rulebase security rules "Egress Allow DNS" log-start yes log-end yes
@@ -155,8 +151,6 @@ set rulebase security rules "User NTP Access to Debian" profile-setting group Be
 set rulebase security rules "Public DNS Access to Debian" profile-setting group Best_Practice_Security
 set rulebase security rules "User DNS Access to Debian" profile-setting group Best_Practice_Security
 set rulebase security rules "Block Egress Traffic from WKS" profile-setting group Best_Practice_Security
-set rulebase security rules "Allow HTTPS to Palo MGT from WKS" profile-setting group Best_Practice_Security
-set rulebase security rules "Allow SSH to Palo MGT from WKS" profile-setting group Best_Practice_Security
 set rulebase security rules "Egress Allow DNS" profile-setting group Best_Practice_Security
 set rulebase security rules "Egress Allow DNS from Debian" profile-setting group Best_Practice_Security
 set rulebase security rules "Egress Allow HTTP" profile-setting group Best_Practice_Security
