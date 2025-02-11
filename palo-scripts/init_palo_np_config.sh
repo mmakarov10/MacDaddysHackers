@@ -25,7 +25,8 @@ set address "Splunk-NAT" ip-netmask 10.229.100.109
 set address "Ubuntu Web-NAT" ip-netmask 10.229.100.123
 set service "VPN 500" protocol udp port 500
 set service "VPN 4500" protocol udp port 4500
-set service Port-8000 protocol tcp port 8000
+set service "Port-8000" protocol tcp port 8000
+set service "service-ssh" protocol tcp port 22
 
 delete rulebase security
 set rulebase security rules "Allow Ping" from any source any to any destination any application ping service application-default action allow
@@ -39,9 +40,9 @@ set rulebase security rules "Fedora Mail IMAP External Access" from External sou
 set rulebase security rules "Fedora AD Auth" from Public source Fedora to User destination AD application ldap service application-default action allow 
 set rulebase security rules "Internal to Splunk App" from Internal source any to Public destination "Splunk" application splunk service application-default action allow
 set rulebase security rules "User to Splunk App" from User source any to Public destination "Splunk" application splunk service application-default action allow
-set rulebase security rules "Internal Serve Splunk" from Internal source any to Public destination "Splunk" application web-browsing service port-8000 action allow
-set rulebase security rules "User Serve Splunk" from User source any to Public destination "Splunk" application web-browsing service port-8000 action allow
-set rulebase security rules "External Web Access to Splunk" from External source any to Public destination "Splunk-NAT" application web-browsing service port-8000 action allow
+set rulebase security rules "Internal Serve Splunk" from Internal source any to Public destination "Splunk" application web-browsing service Port-8000 action allow
+set rulebase security rules "User Serve Splunk" from User source any to Public destination "Splunk" application web-browsing service Port-8000 action allow
+set rulebase security rules "External Web Access to Splunk" from External source any to Public destination "Splunk-NAT" application web-browsing service Port-8000 action allow
 set rulebase security rules "External DNS Access" from External source any to Internal destination "Debian-NAT" application dns service application-default action allow
 set rulebase security rules "Public NTP Access to Debian" from Public source any to Internal destination "Debian" application ntp service application-default action allow
 set rulebase security rules "User NTP Access" from User source any to Internal destination "Debian" application ntp service application-default action allow
