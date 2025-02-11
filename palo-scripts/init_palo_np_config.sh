@@ -4,28 +4,28 @@
 
 ----------------------NONE-PRODUCTION-------------------------------------
 
-set address "docker" ip-netmask 172.20.240.10
-set address "debian" ip-netmask 172.20.240.20
-set address "ubuntu web" ip-netmask 172.20.242.10
-set address "wks" ip-netmask 172.20.242.101
-set address "ad" ip-netmask 172.20.242.200
-set address "splunk" ip-netmask 172.20.241.20
-set address "centos" ip-netmask 172.20.241.30
-set address "fedora" ip-netmask 172.20.241.40
-set address "palo mgmt" ip-netmask 172.20.242.150
-set address "internal segment" ip-netmask 172.20.240.254/24
-set address "user segment" ip-netmask 172.20.242.254/24
-set address "public segment" ip-netmask 172.20.241.254/24
-set address "ad-nat" ip-netmask 10.229.100.127
-set address "centos-nat" ip-netmask 10.229.100.111
-set address "debian-nat" ip-netmask 10.229.100.120
-set address "docker-nat" ip-netmask 10.229.100.197
-set address "fedora-nat" ip-netmask 10.229.100.139
-set address "splunk-nat" ip-netmask 10.229.100.109
-set address "ubuntu web-nat" ip-netmask 10.229.100.123
+set address "Docker" ip-netmask 172.20.240.10
+set address "Debian" ip-netmask 172.20.240.20
+set address "Ubuntu Web" ip-netmask 172.20.242.10
+set address "WKS" ip-netmask 172.20.242.101
+set address "AD" ip-netmask 172.20.242.200
+set address "Splunk" ip-netmask 172.20.241.20
+set address "Centos" ip-netmask 172.20.241.30
+set address "Fedora" ip-netmask 172.20.241.40
+set address "Palo Mgmt" ip-netmask 172.20.242.150
+set address "Internal Segment" ip-netmask 172.20.240.254/24
+set address "User Segment" ip-netmask 172.20.242.254/24
+set address "Public Segment" ip-netmask 172.20.241.254/24
+set address "AD-NAT" ip-netmask 10.229.100.127
+set address "Centos-NAT" ip-netmask 10.229.100.111
+set address "Debian-NAT" ip-netmask 10.229.100.120
+set address "Docker-NAT" ip-netmask 10.229.100.197
+set address "Fedora-NAT" ip-netmask 10.229.100.139
+set address "Splunk-NAT" ip-netmask 10.229.100.109
+set address "Ubuntu Web-NAT" ip-netmask 10.229.100.123
 set service "VPN 500" protocol udp port 500
 set service "VPN 4500" protocol udp port 4500
-set service port-8000 protocol tcp port 8000
+set service Port-8000 protocol tcp port 8000
 
 delete rulebase security
 set rulebase security rules "Allow Ping" from any source any to any destination any application ping service application-default action allow
@@ -45,8 +45,8 @@ set rulebase security rules "External Web Access to Splunk" from External source
 set rulebase security rules "External DNS Access" from External source any to Internal destination "Debian-NAT" application dns service application-default action allow
 set rulebase security rules "Public NTP Access to Debian" from Public source any to Internal destination "Debian" application ntp service application-default action allow
 set rulebase security rules "User NTP Access" from User source any to Internal destination "Debian" application ntp service application-default action allow
-set rulebase security rules "Allow HTTPS to Palo MGT from WKS" from User source "WKS" to "palo mgmt" destination "palo mgmt" application any service service-https action allow
-set rulebase security rules "Allow SSH to Palo MGT from WKS" from User source "WKS" to "palo mgmt" destination "palo mgmt" application "ssh" service "service-ssh" action allow
+set rulebase security rules "Allow HTTPS to Palo MGT from WKS" from User source "WKS" to "Palo Mgmt" destination "Palo Mgmt" application any service service-https action allow
+set rulebase security rules "Allow SSH to Palo MGT from WKS" from User source "WKS" to "Palo Mgmt" destination "Palo Mgmt" application "ssh" service "service-ssh" action allow
 set rulebase security rules "Block Egress Traffic from WKS" from User source "WKS" to any destination any application any service any action deny
 set rulebase security rules "Block Egress Traffic from WKS" disabled yes
 set rulebase security rules "Egress Allow DNS from Debian" from Internal source debian to External destination any application dns service application-default action allow
