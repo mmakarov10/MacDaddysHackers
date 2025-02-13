@@ -1,0 +1,69 @@
+# Flush all existing rules (clears active rules)
+sudo iptables -F
+sudo iptables -X
+sudo iptables -Z
+
+# Default policies: Allow outgoing, deny incoming, and deny forwarding
+sudo iptables -P INPUT DROP
+sudo iptables -P FORWARD DROP
+sudo iptables -P OUTPUT ACCEPT
+
+# Allow loopback interface (localhost)
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A OUTPUT -o lo -j ACCEPT
+
+# Allow established and related connections
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Allow ICMP (Ping)
+sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+# Allow LMTP (port 24)
+sudo iptables -A INPUT -p tcp --dport 24 -j ACCEPT
+
+# Allow SMTP (port 25)
+sudo iptables -A INPUT -p tcp --dport 25 -j ACCEPT
+
+# Allow Secure SMTP (SMTPS, port 465)
+sudo iptables -A INPUT -p tcp --dport 465 -j ACCEPT
+
+# Allow POP3 (port 110)
+sudo iptables -A INPUT -p tcp --dport 110 -j ACCEPT
+
+# Allow Secure POP3 (POP3S, port 995)
+sudo iptables -A INPUT -p tcp --dport 995 -j ACCEPT
+
+# Allow IMAP (port 143)
+sudo iptables -A INPUT -p tcp --dport 143 -j ACCEPT
+
+# Allow Secure IMAP (IMAPS, port 993)
+sudo iptables -A INPUT -p tcp --dport 993 -j ACCEPT
+
+# Allow LDAP (port 389)
+sudo iptables -A INPUT -p tcp --dport 389 -j ACCEPT
+
+# Allow Secure LDAP (LDAPS, port 636)
+sudo iptables -A INPUT -p tcp --dport 636 -j ACCEPT
+
+# Allow HTTP (port 80)
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+# Allow HTTPS (port 443)
+sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+# Allow Splunk Forwarder (port 9997)
+sudo iptables -A INPUT -p tcp --dport 9997 -j ACCEPT
+
+# Allow MariaDB/MySQL (default port 3306)
+sudo iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
+
+# Allow DNS (port 53 for both TCP and UDP)
+sudo iptables -A INPUT -p tcp --dport 53 -j ACCEPT
+sudo iptables -A INPUT -p udp --dport 53 -j ACCEPT
+
+# Block SSH (port 22) completely
+sudo iptables -A INPUT -p tcp --dport 22 -j DROP
+
+# Log and drop everything else
+sudo iptables -A INPUT -j LOG --log-prefix "IPTables-Dropped: " --log-level 4
+sudo iptables -A INPUT -j DROP
