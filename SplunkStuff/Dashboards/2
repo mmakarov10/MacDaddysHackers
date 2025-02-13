@@ -1,0 +1,116 @@
+<dashboard version="1.1">
+  <label>Security Operations Center (SOC) Dashboard</label>
+  <!-- Time Picker -->
+  <input type="time" token="time">
+    <default>
+      <earliest>-24h@h</earliest>
+      <latest>now</latest>
+    </default>
+  </input>
+  <!-- Failed Logins Panel -->
+  <row>
+    <panel>
+      <title>Top Failed Login Attempts</title>
+      <chart>
+        <search>
+          <query>
+            index=auth_logs sourcetype=linux_secure "Failed password"
+            | rex "Failed password for .* from (?&lt;IP&gt;\d+\.\d+\.\d+\.\d+)"
+            | stats count by IP
+            | where count > 10
+            | sort -count
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+  <!-- Account Lockout Panel -->
+  <row>
+    <panel>
+      <title>Active Directory Account Lockouts</title>
+      <table>
+        <search>
+          <query>
+            index=windows_logs sourcetype=WinEventLog:Security EventCode=4740
+            | stats count by Account_Name, Caller_Computer_Name
+            | sort -count
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <!-- PowerShell Execution Panel -->
+  <row>
+    <panel>
+      <title>Suspicious PowerShell Commands</title>
+      <table>
+        <search>
+          <query>
+            index=windows_logs sourcetype=WinEventLog:Security EventCode=4688
+            | search Process_Name="*powershell.exe*"
+            | stats count by Account_Name, Process_Name, Command_Line
+            | sort -count
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <!-- High CPU Usage Panel -->
+  <row>
+    <panel>
+      <title>Servers with High CPU Usage</title>
+      <chart>
+        <search>
+          <query>
+            index=performance sourcetype="cpu_usage"
+            | stats avg(Percent_Processor_Time) by host
+            | sort - avg(Percent_Processor_Time)
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+      </chart>
+    </panel>
+  </row>
+  <!-- Top Users by Bandwidth -->
+  <row>
+    <panel>
+      <title>Top Users by Bandwidth Usage</title>
+      <chart>
+        <search>
+          <query>
+            index=network_logs sourcetype=firewall
+            | stats sum(bytes_out) as Total_Outbound, sum(bytes_in) as Total_Inbound by user
+            | sort -Total_Outbound
+            | head 10
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+  </row>
+</dashboard>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
