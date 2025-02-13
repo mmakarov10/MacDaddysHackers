@@ -1,0 +1,42 @@
+#!/bin/bash
+
+OUTPUT_FILE="/root/scheduled_tasks_report.txt"
+
+echo "Scheduled Tasks Report - $(date)" > "$OUTPUT_FILE"
+echo "======================================" >> "$OUTPUT_FILE"
+
+# Get all system users (UID >= 1000 are regular users)
+USERS=$(awk -F: '$3 >= 1000 {print $1}' /etc/passwd)
+
+# Check cron jobs for each user
+echo "Checking user crontabs..." >> "$OUTPUT_FILE"
+for user in $USERS; do
+    echo "User: $user" >> "$OUTPUT_FILE"
+    crontab -l -u "$user" 2>/dev/null >> "$OUTPUT_FILE" || echo "No crontab found" >> "$OUTPUT_FILE"
+    echo "--------------------------------------" >> "$OUTPUT_FILE"
+done
+
+# Check system-wide cron jobs
+echo "Checking system-wide crontabs..." >> "$OUTPUT_FILE"
+for file in /etc/cron.d/* /var/spool/cron/* /etc/crontab; do
+    if [ -f "$file" ]; then
+        echo "File: $file" >> "$OUTPUT_FILE"
+        cat "$file" >> "$OUTPUT_FILE"
+        echo "--------------------------------------" >> "$OUTPUT_FILE"
+    fi
+done
+
+# Check systemd timers for each user
+echo "Checking systemd timers..." >> "$OUTPUT_FILE"
+for user in $USERS; do
+    echo "User: $user" >> "$OUTPUT_FILE"
+    sudo -u "$user" systemctl --user list-timers --all 2>/dev/null >> "$OUTPUT_FILE" || echo "No systemd timers found" >> "$OUTPUT_FILE"
+    echo "--------------------------------------" >> "$OUTPUT_FILE"
+done
+
+# Check global systemd timers
+echo "Checking global systemd timers..." >> "$OUTPUT_FILE"
+systemctl list-timers --all >> "$OUTPUT_FILE"
+echo "======================================" >> "$OUTPUT_FILE"
+
+echo "Scheduled task check complete! Results saved to: $OUTPUT_FILE"
