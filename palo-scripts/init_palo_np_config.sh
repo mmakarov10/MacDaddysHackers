@@ -23,6 +23,7 @@ set address "Docker-NAT" ip-netmask 10.229.100.197
 set address "Fedora-NAT" ip-netmask 10.229.100.139
 set address "Splunk-NAT" ip-netmask 10.229.100.109
 set address "Ubuntu Web-NAT" ip-netmask 10.229.100.123
+set address "Google-Base-DNS" ip-netmask 8.8.8.8
 set service "VPN 500" protocol udp port 500
 set service "VPN 4500" protocol udp port 4500
 set service "Port-8000" protocol tcp port 8000
@@ -50,7 +51,7 @@ set rulebase security rules "Public NTP Access to Debian" from Public source any
 set rulebase security rules "User NTP Access to Debian" from User source any to Internal destination "Debian" application ntp service application-default action allow
 set rulebase security rules "Public DNS Access to Debian" from Public source any to Internal destination "Debian" application dns service application-default action allow
 set rulebase security rules "User DNS Access to Debian" from User source any to Internal destination "Debian" application dns service application-default action allow
-set rulebase security rules "Egress Allow DNS from Debian" from Internal source Debian to External destination any application dns service application-default action allow
+set rulebase security rules "Egress Allow DNS from Debian" from Internal source Debian to External destination "Google-Base-DNS" application dns service application-default action allow
 set rulebase security rules "Egress Allow NTP from Debian" from Internal source Debian to External destination any application ntp service application-default action allow
 set rulebase security rules "Egress Allow DNS" from any source any to External destination any application dns service application-default action allow
 set rulebase security rules "Egress Allow HTTP" from any source any to External destination any application web-browsing service application-default action allow
