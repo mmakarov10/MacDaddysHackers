@@ -56,8 +56,8 @@ iptables -A INPUT -p tcp --dport 22 -j DROP
 echo "Saving iptables rules for persistence..."
 iptables-save > /etc/sysconfig/iptables
 
-echo "Restarting iptables service..."
-systemctl restart iptables
-
 echo "Final iptables rules applied successfully."
+sudo iptables -A OUTPUT -p tcp --dport 9997 -j ACCEPT
+sudo iptables -A INPUT -p tcp --sport 9997 -j ACCEPT
+
 iptables -L -v -n
