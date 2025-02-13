@@ -13,9 +13,11 @@ set address "Splunk" ip-netmask 172.20.241.20
 set address "Centos" ip-netmask 172.20.241.30
 set address "Fedora" ip-netmask 172.20.241.40
 set address "Palo Mgmt" ip-netmask 172.20.242.150
+
 set address "Internal Segment" ip-netmask 172.20.240.254/24
 set address "User Segment" ip-netmask 172.20.242.254/24
 set address "Public Segment" ip-netmask 172.20.241.254/24
+
 set address "AD-NAT" ip-netmask 10.229.100.127
 set address "Centos-NAT" ip-netmask 10.229.100.111
 set address "Debian-NAT" ip-netmask 10.229.100.120
@@ -24,6 +26,7 @@ set address "Fedora-NAT" ip-netmask 10.229.100.139
 set address "Splunk-NAT" ip-netmask 10.229.100.109
 set address "Ubuntu Web-NAT" ip-netmask 10.229.100.123
 set address "Google-Base-DNS" ip-netmask 8.8.8.8
+
 set service "VPN 500" protocol udp port 500
 set service "VPN 4500" protocol udp port 4500
 set service "Port-8000" protocol tcp port 8000
@@ -130,7 +133,6 @@ set profiles spyware Best_Sec_Policy rules simple-low severity low action defaul
 set profiles spyware Best_Sec_Policy rules simple-low category any packet-capture disable threat-name any
 
 set profiles wildfire-analysis Best_Sec_Policy rules "Send All" application any file-type any direction both analysis public-cloud
-
 set profile-group Best_Practice_Security file-blocking "strict file blocking" spyware Best_Sec_Policy virus Best_Sec_Policy vulnerability Best_Sec_Policy url-filtering default wildfire-analysis Best_Sec_Policy
 
 set rulebase security rules "Allow Ping" profile-setting group Best_Practice_Security
@@ -158,7 +160,6 @@ set rulebase security rules "Egress Allow HTTP" profile-setting group Best_Pract
 set rulebase security rules "Egress Allow HTTPS" profile-setting group Best_Practice_Security
 set rulebase security rules "Egress Allow NTP from Debian" profile-setting group Best_Practice_Security
 set rulebase security rules "Catch-All Deny" profile-setting group Best_Practice_Security
-
 
 set deviceconfig system ntp-servers primary-ntp-server ntp-server-address 172.20.240.20 authentication-type none
 set deviceconfig system login-banner "Team TEST network for work only. Monitoring in place. Will provide information to law enforcement if used without authorization."
