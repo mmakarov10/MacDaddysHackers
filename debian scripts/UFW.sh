@@ -4,11 +4,11 @@ sudo ufw --force reset
 
 # Allow Incoming Web Traffic (HTTP and HTTPS)
 
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
+#sudo ufw allow 80/tcp
+#sudo ufw allow 443/tcp
 
 # Allow SSH Traffic
-sudo ufw allow 22/tcp
+#sudo ufw allow 22/tcp
 
 # Allow Incoming DNS & NTP
 
@@ -20,7 +20,7 @@ sudo ufw allow 953/udp
 
 # Allow Outgoing DNS & NTP
 
-sudo ufw allow out 80/tcp
+sudo ufw allow out 443/tcp
 sudo ufw allow out 53/udp
 sudo ufw allow out 123/udp
 
