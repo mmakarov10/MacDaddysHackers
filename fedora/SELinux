@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# Ensure the script is run as root
+if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root"
+    exit 1
+fi
+
+echo "Updating system and installing required packages..."
+yum update -y
+yum install -y selinux-policy-targeted postfix dovecot
+
+# Ensure SELinux is enforcing
+echo "Setting SELinux to enforcing mode..."
+setenforce 1
+sed -i 's/^SELINUX=.*/SELINUX=enforcing/' /etc/selinux/config
+
+# Enable and start Postfix
+echo "Enabling and starting Postfix..."
+systemctl enable postfix
+systemctl start postfix
+
+# Enable and start Dovecot
+echo "Enabling and starting Dovecot..."
+systemctl enable dovecot
+systemctl start dovecot
+
+# Configure SELinux for Postfix and Dovecot
+echo "Configuring SELinux rules for mail services..."
+semanage permissive -a dovecot_t
+semanage permissive -a postfix_t
+
+# Configure SELinux for Splunk Forwarder
+echo "Configuring SELinux for Splunk Forwarder..."
+if ! semanage fcontext -l | grep -q "/opt/splunk"; then
+    semanage fcontext -a -t splunkd_t "/opt/splunk(/.*)?"
+    restorecon -Rv /opt/splunk
+else
+    echo "SELinux context for /opt/splunk already exists. Skipping."
+fi
+
+# Allow Splunk to run properly under SELinux
+semanage permissive -a splunk_t
+
+echo "Configuration complete. Here are some troubleshooting commands:"
+
+echo "
+--- Postfix Troubleshooting ---
+- Check status: systemctl status postfix
+- View logs: journalctl -u postfix --no-pager
+- Test sending mail: echo 'Test email' | mail -s 'Test' user@example.com
+- Check mail queue: mailq
+
+--- Dovecote Troubleshooting ---
+- Check status: systemctl status dovecot
+- View logs: journalctl -u dovecot --no-pager
+- Test authentication: doveadm auth test user@example.com password
+
+--- SELinux Troubleshooting ---
+- Check SELinux status: getenforce
+- List SELinux mail policies: semanage boolean -l | grep mail
+- Check denials: ausearch -m AVC,USER_AVC,SELINUX_ERR -ts recent | audit2why
+
+--- Splunk Troubleshooting ---
+- Check status: systemctl status splunkd
+- View logs: journalctl -u splunkd --no-pager
+- Verify SELinux context: ls -Z /opt/splunk
+- Fix permissions: restorecon -Rv /opt/splunk
+"
+
+echo "Done!"
