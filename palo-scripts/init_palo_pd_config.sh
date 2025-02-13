@@ -29,7 +29,7 @@ set address "Google-Base-DNS" ip-netmask 8.8.8.8
 
 set service "VPN 500" protocol udp port 500
 set service "VPN 4500" protocol udp port 4500
-set service port-8000 protocol tcp port 8000
+set service "port-8000" protocol tcp port 8000
 set service "service-ssh" protocol tcp port 22
 
 delete rulebase security
