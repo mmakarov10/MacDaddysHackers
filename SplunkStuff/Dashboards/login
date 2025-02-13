@@ -1,0 +1,110 @@
+<dashboard version="1.1">
+  <label>Login Monitoring Dashboard (Windows & Linux)</label>
+
+  <!-- Time Picker -->
+  <input type="time" token="time">
+    <default>
+      <earliest>-24h@h</earliest>
+      <latest>now</latest>
+    </default>
+  </input>
+
+  <!-- Failed Logins (Windows + Linux) -->
+  <row>
+    <panel>
+      <title>Failed Logins (Windows & Linux)</title>
+      <chart>
+        <search>
+          <query>
+            (index=windows_logs sourcetype=WinEventLog:Security EventCode=4625)
+            OR (index=linux_logs sourcetype=linux_secure "Failed password")
+            | eval OS=if(sourcetype=="WinEventLog:Security","Windows","Linux")
+            | stats count by OS, Account_Name, src_ip
+            | sort -count
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- Successful Logins (Windows + Linux) -->
+  <row>
+    <panel>
+      <title>Successful Logins (Windows & Linux)</title>
+      <chart>
+        <search>
+          <query>
+            (index=windows_logs sourcetype=WinEventLog:Security EventCode=4624)
+            OR (index=linux_logs sourcetype=linux_secure "session opened")
+            | eval OS=if(sourcetype=="WinEventLog:Security","Windows","Linux")
+            | stats count by OS, Account_Name, src_ip
+            | sort -count
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- Brute Force Attack Detection -->
+  <row>
+    <panel>
+      <title>Brute Force Attack Attempts</title>
+      <table>
+        <search>
+          <query>
+            (index=windows_logs sourcetype=WinEventLog:Security EventCode=4625)
+            OR (index=linux_logs sourcetype=linux_secure "Failed password")
+            | stats count by src_ip
+            | where count > 20
+            | sort -count
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <!-- Windows Account Lockouts -->
+  <row>
+    <panel>
+      <title>Windows AD Account Lockouts</title>
+      <table>
+        <search>
+          <query>
+            index=windows_logs sourcetype=WinEventLog:Security EventCode=4740
+            | stats count by Account_Name, Caller_Computer_Name
+            | sort -count
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <!-- Linux Root Logins -->
+  <row>
+    <panel>
+      <title>Root Logins on Linux</title>
+      <table>
+        <search>
+          <query>
+            index=linux_logs sourcetype=linux_secure "session opened for user root"
+            | stats count by host, user, src_ip
+            | sort -count
+          </query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
