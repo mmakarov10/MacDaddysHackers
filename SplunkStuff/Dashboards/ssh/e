@@ -1,0 +1,65 @@
+<dashboard version="1.1">
+  <label>Security Monitoring Dashboard</label>
+
+  <!-- Failed Login Attempts Panel -->
+  <row>
+    <panel>
+      <title>Failed Login Attempts</title>
+      <chart>
+        <search>
+          <query>
+            index=windows_logs sourcetype=WinEventLog:Security EventCode=4625 
+            | stats count by Account_Name, Workstation_Name, Failure_Reason
+            | sort -count
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- Brute Force Attempts Panel -->
+  <row>
+    <panel>
+      <title>Brute Force Attack Detection</title>
+      <chart>
+        <search>
+          <query>
+            index=auth_logs sourcetype=linux_secure "Failed password"
+            | timechart span=10m count by src_ip
+            | where count > 20
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- High CPU Usage Panel -->
+  <row>
+    <panel>
+      <title>High CPU Usage Processes</title>
+      <table>
+        <search>
+          <query>
+            index=performance sourcetype="cpu_usage"
+            | stats avg(Percent_Processor_Time) by Process_Name
+            | sort - avg(Percent_Processor_Time)
+          </query>
+          <earliest>-1h@h</earliest>
+          <latest>now</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
+
+
+
+
+
