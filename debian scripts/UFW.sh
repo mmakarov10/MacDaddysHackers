@@ -24,6 +24,10 @@ sudo ufw allow out 443/tcp
 sudo ufw allow out 53/udp
 sudo ufw allow out 123/udp
 
+# Allow Incoming & Outgoing Ping (ICMP)
+sudo ufw allow in proto icmp
+sudo ufw allow out proto icmp
+
 # Deny Any Other Incoming & Outgoing Traffic By Default
 sudo ufw default deny outgoing
 sudo ufw default deny incoming
